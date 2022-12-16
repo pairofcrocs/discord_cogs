@@ -1,8 +1,9 @@
 import discord
 import aiohttp
+import redbot
 from discord.ext import commands
 from discord.utils import get
-from redbot.core.tasks import tasks
+from redbot.core import tasks
 
 class GithubStarsCog(commands.Cog):
     def __init__(self, bot):
