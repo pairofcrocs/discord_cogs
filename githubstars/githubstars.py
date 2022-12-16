@@ -1,48 +1,30 @@
 import discord
-import requests
+import aiohttp
+from discord.ext import commands
+from discord.utils import get
+from redbot.core import tasks
 
-from discord.ext import commands,tasks
-
-class GitHubStarsCog(commands.Cog):
+class GithubStarsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.session = aiohttp.ClientSession()
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        # Create a private, audio channel called "github stars" in the "Server Stats" category
-        server = self.bot.get_guild(920056098122248193)
-        category = discord.utils.get(server.categories, name="Server Stats")
-        moderator_role = discord.utils.get(server.roles, name="TA Mods")
-
-        # Make it so that only users with the "Moderator" role can connect to the channel
+    def create_github_stars_channel(self, ctx):
+        category = get(ctx.guild.categories, name="Server Stats")
         overwrites = {
-            server.default_role: discord.PermissionOverwrite(connect=False),
-            moderator_role: discord.PermissionOverwrite(connect=True),
+            ctx.guild.default_role: discord.PermissionOverwrite(connect=False)
         }
-        github_stars_channel = await server.create_voice_channel("github stars", category=category, overwrites=overwrites, position=0)
+        return await ctx.guild.create_voice_channel("Github Stars", category=category, overwrites=overwrites)
 
-        # Get the number of stars for the GitHub repository
-        repo_url = "https://api.github.com/repos/tubearchivist/tubearchivist"
-        response = requests.get(repo_url)
-        data = response.json()
-        stars = data["stargazers_count"]
+    async def update_github_stars(self, channel, repository):
+        async with self.session.get(f"https://api.github.com/repos/tubearchivist/tubearchivist") as resp:
+            data = await resp.json()
+            stars = data["stargazers_count"]
+            await channel.edit(name=f"Github Stars: {stars}")
 
-        # Rename the channel to "GitHub-Stars" and append the number of stars
-        await github_stars_channel.edit(name=f"GitHub-Stars ({stars})")
-
-    @tasks.loop(hours=1.0)
-    async def update_stars(self):
-        # Get the GitHub repository channel
-        github_stars_channel = self.bot.get_channel(YOUR_GITHUB_STARS_CHANNEL_ID)
-
-        # Get the number of stars for the GitHub repository
-        repo_url = "https://api.github.com/repos/tubearchivist/tubearchivist"
-        response = requests.get(repo_url)
-        data = response.json()
-        stars = data["stargazers_count"]
-
-        # Rename the channel to "GitHub-Stars" and append the updated number of stars
-        await github_stars_channel.edit(name=f"GitHub-Stars ({stars})")
+    @tasks.loop(hours=1)
+    async def update_github_stars_loop(self, channel, repository):
+        await self.update_github_stars(channel, repository)
 
 def setup(bot):
-    bot.add_cog(GitHubStarsCog(bot))
+    bot.add_cog(GithubStarsCog(bot))
