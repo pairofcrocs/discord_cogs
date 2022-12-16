@@ -1,4 +1,4 @@
-from .githubstars import githubstars
+from .githubstars import GithubStarsCog
 
 
 def setup(bot):
