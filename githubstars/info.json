@@ -5,7 +5,7 @@
     "hidden": false,
     "install_msg": "Thank you for installing this cog !\nPlease consult the docs at ayrobot.netlify.com for setup informations. (WIP)",
     "required_cogs": {},
-    "requirements": [],
+    "requirements": ["discord", "aiohttp", "redbot"],
     "short": "Github Stars",
     "tags": ["github", "stars", "discord"]
 }
