@@ -9,18 +9,18 @@ class GithubStarsCog(commands.Cog):
         self.bot = bot
         self.session = aiohttp.ClientSession()
 
-    def create_github_stars_channel(self, ctx):
-        category = get(ctx.guild.categories, name="Server Stats")
-        overwrites = {
-            ctx.guild.default_role: discord.PermissionOverwrite(connect=False)
-        }
-        return await ctx.guild.create_voice_channel("Github Stars", category=category, overwrites=overwrites)
+async def create_github_stars_channel(self, ctx):
+    category = get(ctx.guild.categories, name="Server Stats")
+    overwrites = {
+        ctx.guild.default_role: discord.PermissionOverwrite(connect=False)
+    }
+    return await ctx.guild.create_voice_channel("Github Stars", category=category, overwrites=overwrites)
 
-    async def update_github_stars(self, channel, repository):
-        async with self.session.get(f"https://api.github.com/repos/tubearchivist/tubearchivist") as resp:
-            data = await resp.json()
-            stars = data["stargazers_count"]
-            await channel.edit(name=f"Github Stars: {stars}")
+async def update_github_stars(self, channel, repository):
+    async with self.session.get(f"https://api.github.com/repos/{repository}") as resp:
+        data = await resp.json()
+        stars = data["stargazers_count"]
+        await channel.edit(name=f"Github Stars: {stars}")
 
     @tasks.loop(hours=1)
     async def update_github_stars_loop(self, channel, repository):
