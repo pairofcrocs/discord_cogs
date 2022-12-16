@@ -1,0 +1,11 @@
+{
+    "author": ["crocs (crocs#2608)"],
+    "min_bot_version": "3.0.0rc2",
+    "description": "Create a channel that displays how many stars a GitHub Repo has.",
+    "hidden": false,
+    "install_msg": "Thank you for installing this cog !\nPlease consult the docs at ayrobot.netlify.com for setup informations. (WIP)",
+    "required_cogs": {},
+    "requirements": [],
+    "short": "Github Stars",
+    "tags": ["github", "stars", "discord"]
+}
