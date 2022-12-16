@@ -4,7 +4,7 @@ import asyncio
 from discord.ext import commands
 from discord.utils import get
 
-channel = "Github Stars")
+channel = "Github Stars"
 repository = "https://api.github.com/repos/tubearchivist/tubearchivist"
 
 class GithubStarsCog(commands.Cog):
