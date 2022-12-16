@@ -33,7 +33,7 @@ class GithubStarsCog(commands.Cog):
                 await self.update_github_stars(channel, repository)
             except Exception as e:
                 print(f"An error occurred while updating Github stars: {e}")
-            await asyncio.sleep(3600)  # pause for 1 hour
+            await asyncio.sleep(180)  # pause for 1 hour
 
 def setup(bot):
     bot.add_cog(GithubStarsCog(bot))
