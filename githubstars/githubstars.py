@@ -4,6 +4,9 @@ import asyncio
 from discord.ext import commands
 from discord.utils import get
 
+channel = get(ctx.guild.voice_channels, name="Github Stars")
+repository = "tubearchivist/tubearchivist"
+
 class GithubStarsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
