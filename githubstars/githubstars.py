@@ -5,7 +5,7 @@ from redbot.core import commands
 import logging # <<<<<<<<<<<<<-------------------
 
 channel = "Github Stars"
-repository = "https://api.github.com/repos/mozilla/DeepSpeech"
+repository = "https://api.github.com/repos/tubearchivist/tubearchivist"
 
 class GithubStarsCog(commands.Cog):
     def __init__(self, bot):
@@ -23,7 +23,7 @@ class GithubStarsCog(commands.Cog):
         return await ctx.guild.create_voice_channel("Github Stars", category=category, overwrites=overwrites)
 
     async def update_github_stars(self, channel, repository):
-        async with self.session.get(f"https://api.github.com/repos/mozilla/DeepSpeech") as resp:
+        async with self.session.get(f"https://api.github.com/repos/tubearchivist/tubearchivist") as resp:
             data = await resp.json()
             stars = data["stargazers_count"]
             await channel.edit(name=f"Github Stars: {stars}")
