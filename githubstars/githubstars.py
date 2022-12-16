@@ -2,7 +2,7 @@ import discord
 import aiohttp
 import asyncio
 import redbot
-from redbot import commands
+from redbot.core import commands
 from discord.utils import get
 
 channel = "Github Stars"
