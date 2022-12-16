@@ -2,7 +2,7 @@ import discord
 import aiohttp
 from discord.ext import commands
 from discord.utils import get
-from redbot.core import tasks
+from redbot.core.tasks import tasks
 
 class GithubStarsCog(commands.Cog):
     def __init__(self, bot):
