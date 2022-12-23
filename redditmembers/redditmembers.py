@@ -16,8 +16,7 @@ class RedditSubscriberCog(commands.Cog):
 
         guild = ctx.guild
 
-        audio_channel = discord.VoiceChannel(name=subscribers, guild=guild)
-        await audio_channel.create()
+        channel_created = await ctx.guild.create_voice_channel("subscribers")
 
 def setup(bot):
     bot.add_cog(RedditSubscriberCog(bot))
